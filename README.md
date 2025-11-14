@@ -1,16 +1,17 @@
 <h1>Localization-Guided Breast Tumor Segmentation in MRI</h1>
 
-<p>
-  <img src="images/approach.jpg" alt="Framework Overview" width="80%">
+<!-- Framework overview -->
+<p align="center">
+  <img src="images/approach.jpg" alt="Framework Overview" width="70%">
 </p>
 
 <p>
-This repository contains the implementation of a two-stage deep learning framework for breast MRI segmentation, combining:
+This repository contains the implementation of a two-stage deep learning framework for breast MRI segmentation:
 </p>
 
 <ul>
   <li><strong>YOLOv11-n nano</strong> for lesion localization</li>
-  <li><strong>UNet++, UNet3+, TransUNet, Attention UNet</strong> for semantic segmentation</li>
+  <li><strong>UNet++, UNet3+, TransUNet, Attention UNet</strong> for segmentation</li>
 </ul>
 
 <hr>
@@ -18,32 +19,27 @@ This repository contains the implementation of a two-stage deep learning framewo
 <h2>🚀 Overview of the Two-Stage Pipeline</h2>
 
 <h3>1️⃣ Lesion Localization (YOLOv11-n)</h3>
-<p>A lightweight detector identifies suspicious regions on MRI slices.</p>
+<p>YOLOv11-n detects suspicious tumor regions and generates bounding boxes.</p>
 
 <h3>2️⃣ Region-Guided Segmentation</h3>
-<p>
-Detected ROIs are cropped and fed into a segmentation network (UNet++, UNet3+, Attention UNet, TransUNet).
-This improves accuracy and reduces false positives.
-</p>
+<p>Each detected ROI is cropped and segmented using an advanced segmentation network.</p>
 
 <hr>
 
 <h2>📊 Datasets</h2>
 
-<h3>DUKE Breast MRI (MAMA-MIA subset)</h3>
+<h3>DUKE Breast MRI</h3>
 <ul>
-  <li>922 patients → 251 curated cases</li>
-  <li>3D DCE-MRI volumes</li>
-  <li>Converted to <strong>49,236 slices (224×224)</strong></li>
-  <li>Pixel-level masks + bounding boxes</li>
+  <li>251 curated patient studies</li>
+  <li>49,236 axial slices (224×224)</li>
+  <li>Ground-truth tumor masks + bounding boxes</li>
 </ul>
 
-<h3>QIN Breast MRI (TCIA)</h3>
+<h3>QIN Breast MRI</h3>
 <ul>
-  <li>Used ONLY for external validation</li>
-  <li>10 patients × 2 studies</li>
+  <li>Used only for external validation</li>
   <li>76,000+ DICOM images</li>
-  <li>Expert-drawn tumor masks</li>
+  <li>Expert-drawn tumor segmentations</li>
 </ul>
 
 <hr>
@@ -54,38 +50,33 @@ This improves accuracy and reduces false positives.
   <li>Extract 2D slices from NIfTI/DICOM</li>
   <li>Remove empty slices</li>
   <li>Export to PNG</li>
-  <li>Resize to <strong>224×224</strong></li>
-  <li>Normalize intensities to <strong>[0,1]</strong></li>
+  <li>Resize to 224×224 pixels</li>
+  <li>Normalize pixel intensities to [0,1]</li>
   <li>Extract segmentation masks</li>
   <li>Generate YOLO bounding boxes</li>
-  <li>Split into train / val / test</li>
+  <li>Split into train/validation/test</li>
 </ol>
 
 <hr>
 
-<h2>📈 Quantitative Results</h2>
-
-<p>The two-stage pipeline significantly improves segmentation accuracy across all architectures.</p>
-
-<!-- TABLE STYLE (Optional) -->
+<!-- TABLE STYLE (Github-compatible) -->
 <style>
 table {
   border-collapse: collapse;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 table th, table td {
-  border: 1px solid #999;
+  border: 1px solid #666;
   padding: 8px;
   text-align: center;
 }
-table thead {
-  background-color: #f2f2f2;
-  font-weight: bold;
+table th {
+  background-color: #f0f0f0;
 }
 </style>
 
-<h3>📊 Performance Comparison Between Approaches</h3>
+<h2>📈 Performance Comparison</h2>
 
 <table>
   <thead>
@@ -98,68 +89,35 @@ table thead {
       <th>Recall (%)</th>
     </tr>
   </thead>
+
   <tbody>
 
-    <!-- WITHOUT DETECTION -->
     <tr>
       <td rowspan="4"><strong>Without Detection</strong></td>
-      <td>Attention UNet</td>
-      <td>83.49</td>
-      <td>72.07</td>
-      <td>88.71</td>
-      <td>79.31</td>
+      <td>Attention UNet</td><td>83.49</td><td>72.07</td><td>88.71</td><td>79.31</td>
     </tr>
     <tr>
-      <td>TransUNet</td>
-      <td>83.92</td>
-      <td>72.65</td>
-      <td>86.65</td>
-      <td>81.66</td>
+      <td>TransUNet</td><td>83.92</td><td>72.65</td><td>86.65</td><td>81.66</td>
     </tr>
     <tr>
-      <td>UNet++</td>
-      <td>87.73</td>
-      <td>78.36</td>
-      <td>86.40</td>
-      <td>89.31</td>
+      <td>UNet++</td><td>87.73</td><td>78.36</td><td>86.40</td><td>89.31</td>
     </tr>
     <tr>
-      <td><strong>UNet3+</strong></td>
-      <td><strong>88.19</strong></td>
-      <td><strong>79.70</strong></td>
-      <td><strong>91.48</strong></td>
-      <td><strong>89.57</strong></td>
+      <td><strong>UNet3+</strong></td><td><strong>88.19</strong></td><td><strong>79.70</strong></td><td><strong>91.48</strong></td><td><strong>89.57</strong></td>
     </tr>
 
-    <!-- WITH DETECTION -->
     <tr>
       <td rowspan="4"><strong>With Detection</strong></td>
-      <td>UNet3+</td>
-      <td>93.49</td>
-      <td>91.78</td>
-      <td><strong>93.49</strong></td>
-      <td>93.90</td>
+      <td>UNet3+</td><td>93.49</td><td>91.78</td><td><strong>93.49</strong></td><td>93.90</td>
     </tr>
     <tr>
-      <td>Attention UNet</td>
-      <td>93.44</td>
-      <td>91.74</td>
-      <td>93.43</td>
-      <td>93.88</td>
+      <td>Attention UNet</td><td>93.44</td><td>91.74</td><td>93.43</td><td>93.88</td>
     </tr>
     <tr>
-      <td>TransUNet</td>
-      <td>93.48</td>
-      <td>91.79</td>
-      <td>93.32</td>
-      <td>94.13</td>
+      <td>TransUNet</td><td>93.48</td><td>91.79</td><td>93.32</td><td>94.13</td>
     </tr>
     <tr>
-      <td><strong>UNet++</strong></td>
-      <td><strong>93.62</strong></td>
-      <td><strong>91.96</strong></td>
-      <td>93.43</td>
-      <td><strong>94.19</strong></td>
+      <td><strong>UNet++</strong></td><td><strong>93.62</strong></td><td><strong>91.96</strong></td><td>93.43</td><td><strong>94.19</strong></td>
     </tr>
 
   </tbody>
@@ -169,27 +127,37 @@ table thead {
 
 <h2>📷 Qualitative Results</h2>
 
-<h3>1️⃣ DUKE Breast MRI – Segmentation Results</h3>
-<img src="images/duke_results.png" width="90%">
+<!-- DUKE -->
+<h3>1️⃣ DUKE Segmentation Results</h3>
+<p align="center">
+  <img src="images/duke_results.png" width="75%">
+</p>
 
-<h3>2️⃣ Effect of YOLO Detection Before Segmentation</h3>
-<img src="images/yolo_irM.png" width="90%">
+<!-- YOLO IMPACT -->
+<h3>2️⃣ YOLO Detection Impact</h3>
+<p align="center">
+  <img src="images/yolo_irM.png" width="65%">
+</p>
 
-<h3>3️⃣ Comparison with Multiple Architectures</h3>
-<img src="images/résultats de seg.png" width="90%">
+<!-- MODEL COMPARISON -->
+<h3>3️⃣ Model Comparison</h3>
+<p align="center">
+  <img src="images/seg_results.png" width="70%">
+</p>
 
-<h3>4️⃣ QIN Breast MRI – External Validation</h3>
-<img src="images/QIN_affi (1).png" width="90%">
+<!-- QIN -->
+<h3>4️⃣ QIN External Validation</h3>
+<p align="center">
+  <img src="images/qin_results.png" width="75%">
+</p>
 
 <hr>
 
 <h2>📜 Citation</h2>
-
 <pre>
 @article{touazi2025breastmri,
   title={Enhancing Breast Tumor Segmentation in MRI Using a Localization-Guided Deep Learning Framework},
   author={Touazi, Fayçal and Gaceb, Djamel and Benzenati, Tayeb and Arioua, Fayçal},
-  journal={submitted},
   year={2025}
 }
 </pre>
@@ -197,4 +165,4 @@ table thead {
 <hr>
 
 <h2>📄 License</h2>
-<p>This project is released under the MIT License.</p>
+<p>Released under the MIT License.</p>
