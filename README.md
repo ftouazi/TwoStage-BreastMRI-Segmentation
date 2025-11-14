@@ -94,14 +94,16 @@ These results confirm **strong cross-dataset generalization**, despite major dif
 
 # 📷 Qualitative Results
 
-### **1️⃣ DUKE Segmentation Results**
-<img src="images/aff_duke2.png" width="60%">
 
-### **2️⃣ YOLO Detection Impact**
+
+### **1️⃣ YOLO Detection Impact**
 <img src="images/yolo_irM.png" width="45%">
 
-### **3️⃣ Comparison Across Segmentation Architectures**
+### **2️⃣ Comparison Across Segmentation Architectures**
 <img src="images/résultats de seg.png" width="65%">
 
+### **3️⃣ DUKE Segmentation Results**
+<img src="images/aff_duke2.png" width="50%">
+
 ### **4️⃣ QIN External Validation**
-<img src="images/QIN_affi (1).png" width="60%">
+<img src="images/QIN_affi (1).png" width="50%">
