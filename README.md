@@ -61,100 +61,47 @@ This improves precision and reduces false positives.
 
 <hr>
 
-<h2>📈 Performance Comparison</h2>
+# 📈 Performance Comparison
 
-<p>
-The table below compares segmentation models trained directly vs. trained with YOLO-based localization.
-</p>
+| **Approach** | **Model** | **DSC (%)** | **IoU (%)** | **Precision (%)** | **Recall (%)** |
+|--------------|-----------|-------------|-------------|--------------------|-----------------|
+| **Without Detection** | Attention UNet | 83.49 | 72.07 | 88.71 | 79.31 |
+| **Without Detection** | TransUNet | 83.92 | 72.65 | 86.65 | 81.66 |
+| **Without Detection** | UNet++ | 87.73 | 78.36 | 86.40 | 89.31 |
+| **Without Detection** | **UNet3+** | **88.19** | **79.70** | **91.48** | **89.57** |
+| **With Detection** | UNet3+ | 93.49 | 91.78 | **93.49** | 93.90 |
+| **With Detection** | Attention UNet | 93.44 | 91.74 | 93.43 | 93.88 |
+| **With Detection** | TransUNet | 93.48 | 91.79 | 93.32 | 94.13 |
+| **With Detection** | **UNet++** | **93.62** | **91.96** | 93.43 | **94.19** |
 
-<table>
-  <thead>
-    <tr>
-      <th>Approach</th>
-      <th>Model</th>
-      <th>DSC (%)</th>
-      <th>IoU (%)</th>
-      <th>Precision (%)</th>
-      <th>Recall (%)</th>
-    </tr>
-  </thead>
-  <tbody>
+---
 
-    <!-- WITHOUT DETECTION -->
-    <tr>
-      <td><strong>Without Detection</strong></td>
-      <td>Attention UNet</td><td>83.49</td><td>72.07</td><td>88.71</td><td>79.31</td>
-    </tr>
-    <tr>
-      <td><strong>Without Detection</strong></td>
-      <td>TransUNet</td><td>83.92</td><td>72.65</td><td>86.65</td><td>81.66</td>
-    </tr>
-    <tr>
-      <td><strong>Without Detection</strong></td>
-      <td>UNet++</td><td>87.73</td><td>78.36</td><td>86.40</td><td>89.31</td>
-    </tr>
-    <tr>
-      <td><strong>Without Detection</strong></td>
-      <td><strong>UNet3+</strong></td>
-      <td><strong>88.19</strong></td><td><strong>79.70</strong></td>
-      <td><strong>91.48</strong></td><td><strong>89.57</strong></td>
-    </tr>
+# 🧪 QIN External Validation (Generalization Test)
 
-    <!-- WITH DETECTION -->
-    <tr>
-      <td><strong>With Detection</strong></td>
-      <td>UNet3+</td>
-      <td>93.49</td><td>91.78</td><td><strong>93.49</strong></td><td>93.90</td>
-    </tr>
-    <tr>
-      <td><strong>With Detection</strong></td>
-      <td>Attention UNet</td>
-      <td>93.44</td><td>91.74</td><td>93.43</td><td>93.88</td>
-    </tr>
-    <tr>
-      <td><strong>With Detection</strong></td>
-      <td>TransUNet</td>
-      <td>93.48</td><td>91.79</td><td>93.32</td><td>94.13</td>
-    </tr>
-    <tr>
-      <td><strong>With Detection</strong></td>
-      <td><strong>UNet++</strong></td>
-      <td><strong>93.62</strong></td><td><strong>91.96</strong></td>
-      <td>93.43</td><td><strong>94.19</strong></td>
-    </tr>
+Cross-dataset performance of the Duke-trained **UNet++** model on the **QIN Breast MRI** dataset:
 
-  </tbody>
-</table>
+| **Metric** | **Value** |
+|------------|-----------|
+| Accuracy | 99.61% |
+| Precision | 96.74% |
+| Recall | 96.61% |
+| Dice Similarity Coefficient (DSC) | 96.35% |
+| Intersection over Union (IoU) | 94.74% |
 
-<hr>
+These results confirm **strong cross-dataset generalization**, despite major differences in MRI acquisition protocols.
 
-<h2>📷 Qualitative Results</h2>
+---
 
-<h3>1️⃣ DUKE Segmentation Results</h3>
-<p align="center">
-  <img src="images/aff_duke2.png" width="60%">
-</p>
+# 📷 Qualitative Results
 
-<h3>2️⃣ YOLO Detection vs. No Detection</h3>
-<p align="center">
-  <img src="images/yolo_irM.png" width="45%">
-</p>
+### **1️⃣ DUKE Segmentation Results**
+<img src="images/aff_duke2.png" width="60%">
 
-<h3>3️⃣ Comparison Across Segmentation Models</h3>
-<p align="center">
-  <img src="images/résultats de seg.png" width="65%">
-</p>
+### **2️⃣ YOLO Detection Impact**
+<img src="images/yolo_irM.png" width="45%">
 
-<h3>4️⃣ QIN External Validation</h3>
-<p align="center">
-  <img src="images/QIN_affi (1).png" width="60%">
-</p>
+### **3️⃣ Comparison Across Segmentation Architectures**
+<img src="images/résultats de seg.png" width="65%">
 
-<hr>
-
-<h2>📜 Citation</h2>
-
-<pre>
-@article{touazi2025breastmri,
-  title={Enhancing Breast Tumor Segmentation in MRI Using a Localization-Guided Deep Learning Framework},
-  author={Touazi, Fayçal and Gaceb, Djamel and Benzenati, Tayeb et a
+### **4️⃣ QIN External Validation**
+<img src="images/QIN_affi (1).png" width="60%">
